@@ -1,4 +1,4 @@
-package easy;
+package easy.solution_26;
 
 public class Solution_26 {
     public int removeDuplicates(int[] nums) {
