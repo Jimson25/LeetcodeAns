@@ -2,40 +2,38 @@ package medium.solution_02;
 
 public class Solution_02 {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        // 解析l1为整数
-        long n1 = parseNodeToNum(l1);
+        ListNode head = null, node = null;
+        // 进位标志，如果发生进位这里值为1
+        int cFlag = 0;
 
-        // 解析l2为整数
-        long n2 = parseNodeToNum(l2);
+        while (l1 != null || l2 != null) {
 
-        // 将l1和l2的和转换为链表
-        return parseNumToNode(n1 + n2);
-    }
+            int v1 = l1 != null ? l1.val : 0;
+            int v2 = l2 != null ? l2.val : 0;
+            int sum = v1 + v2 + cFlag;
 
-    private long parseNodeToNum(ListNode node) {
-        long mul = 1, res = 0;
-        do {
-            res = res + node.val * mul;
-            node = node.next;
-            mul *= 10;
-        } while (node != null);
-        return res;
-    }
+            int nodeVal = sum % 10;
+            // 判断是否进位
+            cFlag = sum / 10;
 
-    public ListNode parseNumToNode(long num) {
-        //807
-        ListNode node = null, header = null;
-        do {
-            int l = (int) (num % 10);
-            ListNode listNode = new ListNode(l, null);
-            if (node != null) {
-                node.next = listNode;
-            } else {
-                header = listNode;
+            ListNode n = new ListNode(nodeVal);
+
+            if (head == null) {
+                head = n;
             }
-            node = listNode;
-            num /= 10;
-        } while (num > 0);
-        return header;
+
+            if (node != null) {
+                node.next = n;
+            }
+            node = n;
+            l1 = l1 != null ? l1.next : null;
+            l2 = l2 != null ? l2.next : null;
+        }
+        if (cFlag != 0) {
+            node.next = new ListNode(cFlag);
+        }
+        return head;
     }
+
+
 }
