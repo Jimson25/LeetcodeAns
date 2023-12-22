@@ -4,27 +4,19 @@ public class Solution_03 {
     // abcabcbb
     public int lengthOfLongestSubstring(String s) {
         int maxLen = 0;
-        short[] chars = new short[127];
         for (int i = 0; i < s.length(); i++) {
-            for (int j = i; j < s.length(); ) {
-//                System.out.print(s.charAt(j) + ", ");
-                int charAt = s.charAt(j);
-                // 出现重复字符
-                if (chars[charAt] == 1) {
-                    if (j - i > maxLen) {
-                        maxLen = j - i;
-                    }
-                    chars = new short[127];
-                    break;
-                } else {
+            int currLen = 0;
+            char[] chars = new char[127];
+            for (int j = i; j < s.length(); j++) {
+                char charAt = s.charAt(j);
+                if (chars[charAt] == 0) {
                     chars[charAt] = 1;
+                } else {
+                    break;
                 }
-                if (++j == s.length()) {
-                    maxLen = Math.max(j - i, maxLen);
-                    chars = new short[127];
-                }
+                currLen = j - i;
             }
-//            System.out.println();
+            maxLen = Math.max(currLen + 1, maxLen);
         }
 
         return maxLen;
